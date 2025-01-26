@@ -23,13 +23,13 @@ app.get("/", (req, res) => {
 
 // Signup route
 app.post("/api/signup", async (req, res) => {
-  const { email, username, password } = req.body;
-  if (!email || !username || !password) {
+  const { email, name, password } = req.body;
+  if (!email || !name || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, username, password: hashedPassword });
+    const newUser = new User({ email, name, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
